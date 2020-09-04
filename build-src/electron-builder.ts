@@ -13,7 +13,7 @@ process.argv.forEach((parameter, index, array) => {
         buildSteps.push(buildDeb);
     }
 
-    if (parameter.startsWith('suse')) {
+    if (parameter.startsWith('rpm')) {
         buildSteps.push(buildSuseRpm);
     }
 
@@ -43,13 +43,13 @@ async function buildDeb(): Promise<void> {
         ],
         extraResources: [
             distSrc + '/data/service/tccd',
-            distSrc + '/data/service/TuxedoECAPI.node',
             distSrc + '/data/service/TuxedoWMIAPI.node',
             distSrc + '/data/CHANGELOG.md',
             distSrc + '/data/dist-data/tccd.service',
             distSrc + '/data/dist-data/tccd-sleep.service',
             distSrc + '/data/dist-data/tuxedo-control-center_256.svg',
             distSrc + '/data/dist-data/tuxedo-control-center.desktop',
+            distSrc + '/data/dist-data/tuxedo-control-center-tray.desktop',
             distSrc + '/data/dist-data/de.tuxedocomputers.tcc.policy',
             distSrc + '/data/dist-data/com.tuxedocomputers.tccd.conf'
         ],
@@ -61,7 +61,7 @@ async function buildDeb(): Promise<void> {
             description: 'TUXEDO Control Center Application'
         },
         deb: {
-            depends: ['tuxedo-cc-wmi (>= 0.1.1)'],
+            depends: ['tuxedo-cc-wmi (>= 0.1.4)', 'libappindicator3-1'],
             category: 'System',
             fpm: [
                 '--after-install=./build-src/after_install.sh',
@@ -102,12 +102,12 @@ async function buildSuseRpm(): Promise<void> {
         ],
         extraResources: [
             distSrc + '/data/service/tccd',
-            distSrc + '/data/service/TuxedoECAPI.node',
             distSrc + '/data/service/TuxedoWMIAPI.node',
             distSrc + '/data/dist-data/tccd.service',
             distSrc + '/data/dist-data/tccd-sleep.service',
             distSrc + '/data/dist-data/tuxedo-control-center_256.svg',
             distSrc + '/data/dist-data/tuxedo-control-center.desktop',
+            distSrc + '/data/dist-data/tuxedo-control-center-tray.desktop',
             distSrc + '/data/dist-data/de.tuxedocomputers.tcc.policy',
             distSrc + '/data/dist-data/com.tuxedocomputers.tccd.conf'
         ],
@@ -119,7 +119,7 @@ async function buildSuseRpm(): Promise<void> {
             description: 'TUXEDO Control Center Application'
         },
         rpm: {
-            depends: [ 'tuxedo-cc-wmi >= 0.1.1' ],
+            depends: [ 'tuxedo-cc-wmi >= 0.1.4', 'libappindicator3-1' ],
             fpm: [
                 '--after-install=./build-src/after_install.sh',
                 '--before-remove=./build-src/before_remove.sh',
@@ -159,13 +159,13 @@ async function buildAppImage(): Promise<void> {
         ],
         extraResources: [
             distSrc + '/data/service/tccd',
-            distSrc + '/data/service/TuxedoECAPI.node',
             distSrc + '/data/service/TuxedoWMIAPI.node',
             distSrc + '/data/dist-data/tccd.service',
             distSrc + '/data/dist-data/tccd-sleep.service',
             distSrc + '/data/dist-data/tuxedo-control-center_256.png',
             distSrc + '/data/dist-data/tuxedo-control-center_256.svg',
             distSrc + '/data/dist-data/tuxedo-control-center.desktop',
+            distSrc + '/data/dist-data/tuxedo-control-center-tray.desktop',
             distSrc + '/data/dist-data/de.tuxedocomputers.tcc.policy',
             distSrc + '/data/dist-data/com.tuxedocomputers.tccd.conf'
         ],

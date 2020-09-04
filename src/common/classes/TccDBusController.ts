@@ -58,6 +58,14 @@ export class TccDBusController {
         }
     }
 
+    async tccdVersion(): Promise<string> {
+        try {
+            return await this.interface.TccdVersion();
+        } catch (err) {
+            return '';
+        }
+    }
+
     async getFanDataCPU(): Promise<FanData> {
         try {
             return await this.interface.GetFanDataCPU();
@@ -79,6 +87,22 @@ export class TccDBusController {
             return await this.interface.GetFanDataGPU2();
         } catch (err) {
             return new FanData();
+        }
+    }
+
+    async webcamSWAvailable(): Promise<boolean> {
+        try {
+            return await this.interface.WebcamSWAvailable();
+        } catch (err) {
+            return false;
+        }
+    }
+
+    async getWebcamSWStatus(): Promise<boolean> {
+        try {
+            return await this.interface.GetWebcamSWStatus();
+        } catch (err) {
+            return false;
         }
     }
 }
